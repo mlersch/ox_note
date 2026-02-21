@@ -63,4 +63,17 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+
+	// Configure Mockito as a Java agent to prevent dynamic loading warnings
+	// Required for Java 21+ compatibility (future JDK versions will disallow dynamic agent loading)
+	val mockitoAgent = configurations.testRuntimeClasspath.get()
+		.resolvedConfiguration.resolvedArtifacts
+		.find { it.name == "mockito-core" }
+		?.file
+	if (mockitoAgent != null) {
+		jvmArgs(
+			"-javaagent:${mockitoAgent.absolutePath}",
+			"-Xshare:off"  // Disable CDS to suppress classpath sharing warning
+		)
+	}
 }
