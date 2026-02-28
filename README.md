@@ -344,3 +344,5 @@ Want to learn more? Try:
 ## License
 
 This is a learning project - feel free to use and modify as needed!
+
+[3D-Modell](Untitled.glb)
